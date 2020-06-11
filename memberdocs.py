@@ -1,6 +1,6 @@
 #!/usr/bin/env python
 
-"""A utility for making class rosters with photos of students, also suitable for cutting out and using as student cards."""
+"""A utility for making rosters and membership cards with photos."""
 
 __author__ = "Michelle Arzul"
 __copyright__ = "Copyright 2020, Michelle Arzul"
@@ -163,12 +163,12 @@ def table(content, n_columns):
 {}
         </table>'''.format(rows)
 
-def generate_barcode(student_id):
-    """Returns a string representing an SVG element of a Code 39 Barcode of the provided student ID."""
-    return barcode.Code39(student_id.zfill(8)).render(writer_options={}, text="").decode('utf-8')
+def generate_barcode(member_id):
+    """Returns a string representing an SVG element of a Code 39 Barcode of the provided member ID."""
+    return barcode.Code39(member_id.zfill(8)).render(writer_options={}, text="").decode('utf-8')
 
 def card_div(output_folder, item):
-    """Returns a string representing a div of a nicely formatted student card. Images are relative links."""
+    """Returns a string representing a div of a nicely formatted membership card. Images are relative links."""
     pic = item['id'] + '.jpg'
     if not os.path.exists(os.path.join(output_folder, pic)):
         pic = blank_pic
@@ -196,15 +196,15 @@ def card_div(output_folder, item):
                         </table>
                     </div>'''.format(pic, logo_element, item['name'], generate_barcode(item['id']), item['id'].zfill(8))
 
-def card_divs(output_folder, student_data):
-    """Returns a list of student card divs, see card_div."""
+def card_divs(output_folder, member_data):
+    """Returns a list of membership card divs, see card_div."""
     cards = []
-    for item in student_data:
+    for item in member_data:
         cards.append(card_div(output_folder, item))
     return cards
 
 def list_entry(output_folder, item):
-    """Returns a string representing a div of a nicely formatted student list entry. Images are relative links."""
+    """Returns a string representing a div of a nicely formatted member list entry. Images are relative links."""
     pic = item['id'] + '.jpg'
     if not os.path.exists(os.path.join(output_folder, pic)):
         pic = blank_pic
@@ -223,40 +223,40 @@ def list_entry(output_folder, item):
                         </table>
                     </div>'''.format(pic, item['name'])
 
-def list_divs(output_folder, student_data):
-    """Returns a list of student list entry divs, see list_div."""
+def list_divs(output_folder, member_data):
+    """Returns a list of member list entry divs, see list_div."""
     list_entries = []
-    for item in student_data:
+    for item in member_data:
         list_entries.append(list_entry(output_folder, item))
     return list_entries
 
 def parse_csv(input_file_path):
-    """Returns the location, name minus extension, and list of student data parsed from a CSV file."""
+    """Returns the location, name minus extension, and list of member data parsed from a CSV file."""
     prev_cwd = os.getcwd()
     output_folder = os.path.dirname(input_file_path)
     os.chdir(output_folder)
-    class_name = '.'.join(os.path.basename(input_file_path).split('.')[:-1])
+    list_name = '.'.join(os.path.basename(input_file_path).split('.')[:-1])
     input_filename = os.path.basename(input_file_path)
-    student_data = []
+    member_data = []
     with open(input_filename, 'r') as input_file:
         reader = csv.reader(input_file, delimiter=',')
         for row in reader:
-            student_data.append({
+            member_data.append({
                 'id': row[0],
                 'name': row[1]
             })
     os.chdir(prev_cwd)
-    return (output_folder, class_name, student_data)
+    return (output_folder, list_name, member_data)
 
-def generate_list(output_folder, class_name, student_data):
-    """Write an HTML file to the specified folder containing a class list of the given students."""
-    output_file = class_name + '_list.html'
-    write_output(os.path.join(output_folder, output_file), htmlDoc(class_name + ' List', header(output_folder, class_name) + table(list_divs(output_folder, student_data), 4)))
+def generate_list(output_folder, list_name, member_data):
+    """Write an HTML file to the specified folder containing a list of the given members."""
+    output_file = list_name + '_list.html'
+    write_output(os.path.join(output_folder, output_file), htmlDoc(list_name + ' List', header(output_folder, list_name) + table(list_divs(output_folder, member_data), 4)))
 
-def generate_cards(output_folder, class_name, student_data):
-    """Write an HTML file to the specified folder containing student cards for the given students."""
-    output_file = class_name + '_cards.html'
-    write_output(os.path.join(output_folder, output_file), htmlDoc(class_name + ' Cards', table(card_divs(output_folder, student_data), 2)))
+def generate_cards(output_folder, list_name, member_data):
+    """Write an HTML file to the specified folder containing membership cards for the given members."""
+    output_file = list_name + '_cards.html'
+    write_output(os.path.join(output_folder, output_file), htmlDoc(list_name + ' Cards', table(card_divs(output_folder, member_data), 2)))
 
 def write_output(output_path, content):
     """Writes the given content to the given path."""
@@ -288,11 +288,11 @@ if __name__ == '__main__':
         print('Please specify a valid mode.')
         exit()
 
-    output_folder, class_name, student_data = parse_csv(input_file_path)
+    output_folder, list_name, member_data = parse_csv(input_file_path)
 
     if mode == 'list' or mode == 'both':
-        generate_list(output_folder, class_name, student_data)
+        generate_list(output_folder, list_name, member_data)
     if mode == 'cards' or mode == 'both':
-        generate_cards(output_folder, class_name, student_data)
+        generate_cards(output_folder, list_name, member_data)
     
     print('Done.')
