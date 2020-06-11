@@ -1,6 +1,6 @@
 # Member Docs
 
-This is a utility for making printable rosters and member cards, both optionally with photos. It is intended for use in educational institutions, clubs, workplaces, etc. The cards can be cheaply transformed into physical cards of the same dimensions as a standard ATM card.
+This is a utility for making printable rosters and membership cards, both optionally with photos. It is intended for use in educational institutions, clubs, workplaces, etc. The cards can be cheaply transformed into physical cards of the same dimensions as a standard ATM card.
 
 ## Licence
 
@@ -35,7 +35,7 @@ Open a command prompt terminal and run the following command:
 
 Substitute `<path/to/list.csv>` for the path (relative or absolute) to the comma-delimited list.
 
-Optionally, substitute `<mode>` with one of `list`, `cards`, or `both` to select which output type to produce, or leave blank for default of `both`.
+Optionally, substitute `[<mode>]` with one of `list`, `cards`, or `both` to select which output type to produce, or leave blank for default of `both`.
 
 The script will output files in the same folder as the input file.
 
