@@ -21,11 +21,11 @@ The `/legacy` folder contains the original (terrible) Java version of this utili
 
 The expected input consists of the following:
 
-* A CSV file of the list list with filename `<list>.csv` where `<list>` is the list code/name (such as class or team), with the following columns (no header row):
+* A CSV file of the member list with filename `<list>.csv` where `<list>` is the list code/name (such as class or team), with the following columns (no header row):
   * Member ID (No longer than 8 characters)
   * Name (As you want it to appear on the card, e.g. `Firstname Lastname`, or `LASTNAME Firstname Secondname`. Note that commas are not supported yet and including one will make anything after the comma disappear.)
 * (Optional) In the same folder as the CSV file, an institution logo with filename `logo.png`. This image should have a transparent background. Ideal dimensions 512x512px. Will not be cropped. If absent, layout will adjust for better fit.
-* (Optional) In the same folder as the CSV file, photos of members with filenames `<member_id>.jpg` where `<member_id>` is the corresponding member ID for the member whose photo the file is. These can be of any dimensions, but ideally they should be 827x1063px (i.e. UK/EU ID photo size, equivalent to 35x45mm at 600dpi), or other 7:9 aspect ratio to minimise cropping. If absent, a blank placeholder will be used.
+* (Optional) In the same folder as the CSV file, photos of members with filenames `<member_id>.jpg` where `<member_id>` is the corresponding member ID for the member whose photo the file is. These can be of any dimensions, but ideally they should be 827x1063px (i.e. UK/EU ID photo size, equivalent to 35x45mm at 600dpi), or other 7:9 aspect ratio to minimise cropping. If absent, a placeholder will be used.
 
 ### Running
 
@@ -35,7 +35,7 @@ Open a command prompt terminal and run the following command:
 
 Substitute `<path/to/list.csv>` for the path (relative or absolute) to the comma-delimited list.
 
-Optionally, substitute `[<mode>]` with one of `list`, `cards`, or `both` to select which output type to produce, or leave blank for default of `both`.
+Substitute `[<mode>]` with one of `list`, `cards`, or `both` to select which output type to produce, or leave blank for default of `both`.
 
 The script will output files in the same folder as the input file.
 
