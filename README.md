@@ -31,7 +31,7 @@ The expected input consists of the following:
 
 Open a command prompt terminal and run the following command:
 
-`python member-docs.py <path/to/list.csv> [<mode>]`
+`python memberdocs.py <path/to/list.csv> [<mode>]`
 
 Substitute `<path/to/list.csv>` for the path (relative or absolute) to the comma-delimited list.
 
@@ -41,7 +41,7 @@ The script will output files in the same folder as the input file.
 
 Example using sample data:
 
-`python member-docs.py sample/fruit.csv` will output:
+`python memberdocs.py sample/fruit.csv` will output:
 * `sample/fruit_list.html` which is a roster.
 * `sample/fruit_cards.html` which is a set of cards.
 
